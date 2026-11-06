@@ -73,3 +73,11 @@ test("a failing mirror backend does not lose the message", async () => {
     globalThis.fetch = realFetch; console.error = origError;
   }
 });
+
+test("a mirror without its secrets is skipped, not fatal", async () => {
+  const origError = console.error; console.error = () => {};
+  try {
+    const res = await handleApi(post({ name: "Jo", email: "jo@example.com", message: "Hi" }), { DATA_BACKEND: "memory+zoho" });
+    assert.equal(res.status, 201);
+  } finally { console.error = origError; }
+});

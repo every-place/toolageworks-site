@@ -19,9 +19,9 @@ run_worker_first = ["/api/*"]
 
 [vars]
 # Which database the API uses: "d1", "zoho", or "memory" (local testing only).
-DATA_BACKEND = "d1"
+DATA_BACKEND = "d1+zoho"
 ZOHO_DC = "com"
-ZOHO_OWNER = ""
+ZOHO_OWNER = "toolageworks"
 ZOHO_APP = "toolage-works"
 ZOHO_LEAD_FORM = "Lead"
 
