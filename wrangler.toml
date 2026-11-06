@@ -3,6 +3,12 @@ name = "toolageworks-site"
 main = "src/worker.js"
 compatibility_date = "2026-10-01"
 
+# Serve the site on the real domain. Cloudflare creates the DNS records and HTTPS certificate.
+routes = [
+  { pattern = "toolageworks.com", custom_domain = true },
+  { pattern = "www.toolageworks.com", custom_domain = true },
+]
+
 [assets]
 directory = "./public"
 binding = "ASSETS"
