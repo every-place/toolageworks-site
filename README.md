@@ -40,14 +40,24 @@ npm test
    GoDaddy to the two Cloudflare gives you, then in the Worker → Settings → Domains & Routes add
    `toolageworks.com` and `www.toolageworks.com`. The domain stays registered at GoDaddy.
 
-## Switch to Zoho Creator
+## Send leads to Zoho Creator too
 
-1. In Creator, make an app (link name `toolage-works`) with a form `Lead` and fields
-   `Name`, `Email`, `Company`, `Topic`, `Message` (multi-line), `Source`.
-2. In the Zoho API Console (api-console.zoho.com) create a **Self Client**, generate a code with scope
-   `ZohoCreator.form.CREATE`, and exchange it for a refresh token.
-3. Set secrets: `npx wrangler secret put ZOHO_CLIENT_ID` (and `ZOHO_CLIENT_SECRET`, `ZOHO_REFRESH_TOKEN`).
-4. In `wrangler.toml` set `ZOHO_OWNER` and `DATA_BACKEND = "zoho"`, then redeploy.
+`DATA_BACKEND = "d1+zoho"` saves every message in D1 first, then copies it to Zoho Creator.
+If Zoho is down or the trial lapses, the message is still in D1 (the Zoho error is only logged).
+Use `"zoho"` alone only if you want Zoho as the single store.
+
+1. In Creator, make an app and a form with these field link names, all **Single Line** except Message
+   (Multi Line) and Email (Email): `Name`, `Email`, `Company`, `Topic`, `Message`, `Source`.
+2. At api-console.zoho.com, add a **Self Client**. Under **Generate Code**, use scope
+   `ZohoCreator.form.CREATE`, 10 minutes, and copy the code. Within those 10 minutes run:
+   ```
+   curl -X POST https://accounts.zoho.com/oauth/v2/token -d grant_type=authorization_code -d client_id=CLIENT_ID -d client_secret=CLIENT_SECRET -d code=THE_CODE
+   ```
+   The reply contains `refresh_token`.
+3. Cloudflare → the worker → Settings → Variables and Secrets → add three **Secrets**:
+   `ZOHO_CLIENT_ID`, `ZOHO_CLIENT_SECRET`, `ZOHO_REFRESH_TOKEN`.
+4. In `wrangler.toml` set `ZOHO_OWNER` (your Creator account name, from the app URL), `ZOHO_APP`
+   (the app link name), `ZOHO_LEAD_FORM`, and `DATA_BACKEND = "d1+zoho"`, then push.
 
 ## Not done yet
 

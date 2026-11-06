@@ -58,3 +58,18 @@ test("unknown routes 404", async () => {
 test("zoho adapter refuses to start without secrets", () => {
   assert.throws(() => getStore({ DATA_BACKEND: "zoho" }), /ZOHO_CLIENT_ID/);
 });
+
+test("a failing mirror backend does not lose the message", async () => {
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(JSON.stringify({ error: "down" }), { status: 500 });
+  const zohoEnv = { DATA_BACKEND: "memory+zoho", ZOHO_CLIENT_ID: "x", ZOHO_CLIENT_SECRET: "x", ZOHO_REFRESH_TOKEN: "x", ZOHO_OWNER: "o", ZOHO_APP: "a" };
+  const origError = console.error; console.error = () => {};
+  try {
+    const before = getStore(env)._all().length;
+    const res = await handleApi(post({ name: "Kim", email: "kim@example.com", message: "Hi" }), zohoEnv);
+    assert.equal(res.status, 201);
+    assert.equal(getStore(env)._all().length, before + 1);
+  } finally {
+    globalThis.fetch = realFetch; console.error = origError;
+  }
+});
