@@ -1,6 +1,8 @@
 # Cloudflare Worker with static assets. The website is in public/, the API in src/ and lib/.
 name = "toolageworks-site"
 main = "src/worker.js"
+workers_dev = true     # keep the free .workers.dev link as a backup address
+preview_urls = true
 compatibility_date = "2026-10-01"
 
 # Serve the site on the real domain. Cloudflare creates the DNS records and HTTPS certificate.
