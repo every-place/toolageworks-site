@@ -11,6 +11,10 @@ routes = [
   { pattern = "www.toolageworks.com", custom_domain = true },
 ]
 
+# Keep logs so errors (like a failed Zoho copy) show up under the worker's Observability tab.
+[observability]
+enabled = true
+
 [assets]
 directory = "./public"
 binding = "ASSETS"
