@@ -1,0 +1,18 @@
+# Cloudflare Pages project config. The static site is in public/, the API in functions/.
+name = "toolageworks"
+pages_build_output_dir = "public"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Which database the API uses: "d1", "zoho", or "memory" (local testing only).
+DATA_BACKEND = "d1"
+ZOHO_DC = "com"
+ZOHO_OWNER = ""
+ZOHO_APP = "toolage-works"
+ZOHO_LEAD_FORM = "Lead"
+
+# Create with: npx wrangler d1 create toolageworks   then paste the id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "toolageworks"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
