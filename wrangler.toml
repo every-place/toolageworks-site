@@ -11,8 +11,10 @@ ZOHO_OWNER = ""
 ZOHO_APP = "toolage-works"
 ZOHO_LEAD_FORM = "Lead"
 
-# Create with: npx wrangler d1 create toolageworks   then paste the id below.
-[[d1_databases]]
-binding = "DB"
-database_name = "toolageworks"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+# Turned off until the database exists. To turn on: run
+#   npx wrangler d1 create toolageworks
+# paste the id below, and remove the # from the next four lines.
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "toolageworks"
+# database_id = "REPLACE_WITH_D1_DATABASE_ID"
