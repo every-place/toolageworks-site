@@ -25,10 +25,8 @@ ZOHO_OWNER = ""
 ZOHO_APP = "toolage-works"
 ZOHO_LEAD_FORM = "Lead"
 
-# Turned off until the database exists. To turn on: run
-#   npx wrangler d1 create toolageworks
-# paste the id below, and remove the # from the next four lines.
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "toolageworks"
-# database_id = "REPLACE_WITH_D1_DATABASE_ID"
+# Contact form messages are stored here (table: leads, see db/schema.sql).
+[[d1_databases]]
+binding = "DB"
+database_name = "toolageworks"
+database_id = "78f09abd-f724-45d0-ae61-ed221949aa01"
