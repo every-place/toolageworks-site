@@ -11,3 +11,12 @@ CREATE TABLE IF NOT EXISTS leads (
   created_at  TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS leads_created_at ON leads (created_at);
+
+-- Copies to another backend (e.g. Zoho) that failed. Also created automatically on first failure.
+CREATE TABLE IF NOT EXISTS sync_errors (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  target      TEXT,
+  lead_id     TEXT,
+  error       TEXT,
+  created_at  TEXT
+);
